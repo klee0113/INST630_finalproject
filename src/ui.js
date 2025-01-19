@@ -1,7 +1,7 @@
 export function setupUI(scene, bgmAudio) {
   // Reload Button Functionality
   document.getElementById("reload").addEventListener("click", () => {
-    window.location.reload(); // Reloads the page
+    window.location.reload();
   });
 
   // BGM Control Button Functionality
