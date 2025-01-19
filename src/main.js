@@ -10,7 +10,7 @@ const npcs = [];
 const cameraOffset = new THREE.Vector3(0, 6, 12);
 let isCameraFrozen = false;
 let npcSounds = {};
-let rawAnimalData = []; // Store the full dataset for interactions
+let rawAnimalData = [];
 
 
 // Animal data (default values; replaced by API response)
@@ -31,7 +31,7 @@ async function fetchAnimalData() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    rawAnimalData = data; // Store the dataset for filtering
+    rawAnimalData = data;
 
     // Process API response to count animals by type
     animalData = {
@@ -137,7 +137,7 @@ function init() {
           npcs.push({
             name: node.name,
             position: node.position.clone(),
-            radius: 6, // Proximity range for interaction
+            radius: 6,
             type: getAnimalTypeFromNPC(node.name),
           });
         }
@@ -205,7 +205,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   const delta = clock.getDelta();
-  if (mixer) mixer.update(delta * 0.5); // Slow down animation playback speed
+  if (mixer) mixer.update(delta * 0.5);
 
   // Movement logic
   if (moveDirection.length() > 0 && tinycat) {
@@ -239,7 +239,7 @@ function loadJellyPaw() {
           node.receiveShadow = true;
         }
       });
-      jellyPaw.visible = false; // Initially hidden
+      jellyPaw.visible = false;
       scene.add(jellyPaw);
     },
     undefined,
@@ -253,12 +253,12 @@ function showJellyPaw(animalType, npcName) {
   if (!jellyPaw) return;
 
   const count = animalData[animalType] || 0;
-  const targetScale = count * 0.4; // Adjusted size multiplier
-  const basePositionY = 0.5; // Base height to keep the jelly_paw on the ground
+  const targetScale = count * 0.4;
+  const basePositionY = 0.5;
 
   // Set initial scale to zero for animation
   jellyPaw.scale.set(0, 0, 0);
-  jellyPaw.position.set(0, basePositionY, 0); // Ensure it's centered and on the ground
+  jellyPaw.position.set(0, basePositionY, 0);
   jellyPaw.visible = true;
 
   // Store animal type for interaction
@@ -266,12 +266,12 @@ function showJellyPaw(animalType, npcName) {
 
   // Play NPC sound
   if (npcSounds[npcName]) {
-    if (npcSounds[npcName].isPlaying) npcSounds[npcName].stop(); // Stop if already playing
+    if (npcSounds[npcName].isPlaying) npcSounds[npcName].stop();
     npcSounds[npcName].play();
   }
 
   // Animate appearance
-  const animationDuration = 1.5; // Duration in seconds
+  const animationDuration = 1.5;
   const startTime = performance.now();
 
   function animateJellyPaw(currentTime) {
@@ -280,7 +280,7 @@ function showJellyPaw(animalType, npcName) {
     const interpolatedScale = targetScale * progress;
 
     jellyPaw.scale.set(interpolatedScale, interpolatedScale, interpolatedScale);
-    jellyPaw.position.y = basePositionY + (interpolatedScale / 2); // Adjust Y to keep the base on the ground
+    jellyPaw.position.y = basePositionY + (interpolatedScale / 2);
 
     if (progress < 1) {
       requestAnimationFrame(animateJellyPaw);
@@ -417,7 +417,7 @@ function onKeyDown(event) {
       moveDirection.x = 1;
       break;
     case "Space":
-      checkInteraction(); // Check interaction when Spacebar is pressed
+      checkInteraction();
       break;
   }
 }
@@ -442,8 +442,8 @@ function checkInteraction() {
   npcs.forEach((npc) => {
     const distance = tinycat.position.distanceTo(npc.position);
     if (distance < npc.radius) {
-      showOverlay(npc.type); // Show overlay with dataset count
-      showJellyPaw(npc.type, npc.name); // Show jelly_paw and play sound
+      showOverlay(npc.type);
+      showJellyPaw(npc.type, npc.name);
     }
   });
 
@@ -453,7 +453,7 @@ function checkInteraction() {
     jellyPaw.visible &&
     tinycat.position.distanceTo(jellyPaw.position) < 3
   ) {
-    interactWithJellyPaw(jellyPaw.userData.type); // Pass stored animal type
+    interactWithJellyPaw(jellyPaw.userData.type);
   }
 }
 
