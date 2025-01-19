@@ -6,7 +6,7 @@ body, html {
   height: 100%;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  background-color: #2e3a46; /* Neutral dark background */
+  background-color: #2e3a46;
   color: white;
 }
 
@@ -48,7 +48,7 @@ body, html {
   color: #ffffff;
   background: transparent;
   text-align: center;
-  display: none; /* Hidden by default */
+  display: none;
 }
 
 #loading.show {
@@ -99,7 +99,7 @@ body, html {
 
 /* Additional Reset Styles */
 header, nav {
-  display: none; /* Hide unnecessary elements if present */
+  display: none;
 }
 
 /* Optional: Flexbox centering for full screen elements */
